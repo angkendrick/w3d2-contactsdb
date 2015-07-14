@@ -4,6 +4,7 @@ class Contact
  
   attr_accessor :first_name, :last_name, :email
  
+
   def initialize(hash)
     # TODO: assign local variables to instance variables
     @id = hash["id"].to_i if hash["id"]
@@ -12,5 +13,8 @@ class Contact
     @email = hash["email"]
   end
 
- 
+  def to_s
+    puts "#{@id} - #{@first_name}, #{@last_name} - #{@email}"
+  end
+
 end
