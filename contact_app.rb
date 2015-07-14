@@ -26,7 +26,7 @@ class ContactApp
     db = Database.new
     contact_results = db.return_all_contacts # retrieve all contacts
     contact_results.each { |x| x.to_s }
-    nil
+    #nil
   end
 
   def self.destroy(id) # delete a contact by id
@@ -42,7 +42,7 @@ class ContactApp
 
   def self.find_contact(type, string) # type = id / first / last / email
     db = Database.new
-    contact_results = db.find_contact(type, string)
+    contact_results = db.find_contact(type, string) 
     contact_results.each { |x| x.to_s }
     nil
   end

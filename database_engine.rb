@@ -1,3 +1,4 @@
+require 'irbtools'
 require 'pg'
 require_relative 'contact'
 
@@ -17,8 +18,8 @@ class Database
     begin
       self.connection.exec_params(sql, [contact.first_name, contact.last_name, contact.email]) #write to the db
       puts "Write OK!"
-    rescue
-      "Error writing to the database"
+    rescue Exception => ex
+      "Something went wrong #{ex.class} with #{ex.message}"
     end
   end
 
@@ -34,8 +35,8 @@ class Database
     sql = 'DELETE FROM contacts WHERE id = $1'
     begin
       self.connection.exec_params(sql, [id])
-    rescue
-      puts "Error deleting from database"
+    rescue Exception => ex
+      puts "Something went wrong #{ex.class} with #{ex.message}"
     end
   end
 
@@ -52,10 +53,14 @@ class Database
       sql = 'SELECT * FROM contacts WHERE email = $1'
     end
 
-    self.connection.exec_params(sql, [string]) do |results| # punch all results into a Contact Object
-      results.map do |hash|
-        Contact.new(hash)
+    begin
+      self.connection.exec_params(sql, [string]) do |results| # punch all results into a Contact Object
+        results.map do |hash|
+          Contact.new(hash)
+        end
       end
+    rescue Exception => ex
+      puts "Something went wrong #{ex.class} with #{ex.message}"
     end
 
   end
