@@ -1,0 +1,1 @@
+CREATE TABLE contacts (id bigserial primary key, first_name varchar(30), last_name varchar(30), email varchar(30))
